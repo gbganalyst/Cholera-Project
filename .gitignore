@@ -1,0 +1,25 @@
+.ipynb_checkpoints
+.Rproj.user
+.Rhistory
+.Rdata
+/Vector-Layers
+/Raster-Layers
+/Cholera-data-reshaped/*
+!/Cholera-data-reshaped/.gitkeep
+/data-analysis/*
+!/data-analysis/.gitkeep
+/Modified-Rasters/*
+!/Modified-Rasters/.gitkeep
+/Literature
+Tester script.ipynb
+rasterdf.R
+script.R
+script_sample.R
+Kept4lateruse.ipynb
+For Training.ipynb
+fill_missing_values.R
+analysis_data.rds
+analysis_data_set2.rds
+the plot.R
+Untitled.ipynb
+Useful link.txt
