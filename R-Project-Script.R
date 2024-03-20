@@ -1,14 +1,8 @@
-library(tidyverse)
-library(sf)
-library(terra)
-library(colorspace)
-
-
 if(!require("install.load")){
   install.packages("install.load")
 }
 
-install.load::install_load(c("tidyverse", "sf", "terra"))
+install.load::install_load(c("tidyverse", "sf", "terra", "colorspace","bulkreadr"))
 
 
 set.seed(1234)
@@ -17,9 +11,9 @@ set.seed(1234)
 
 cholera <- st_read("Cholera-data-reshaped/cholera_modified.shp")
 
-stack <- rast("Cholera-data-reshaped/stacked band.tif")
+stack <- rast("Cholera-data-reshaped/stacked-band.tif")
 
-names(stack) = c('Aspect', 'builtuparea', 'Elevation', 'LST', 'LULCC', 'PopDensity', 'Poverty', 'Precipitation', 'Slope')
+names(stack) <- c('Aspect', 'builtuparea', 'Elevation', 'LST', 'LULCC', 'NDVI', 'NDWI', 'PopDensity', 'Poverty', 'Precipitation', 'Slope')
 
 stacked <- spatSample(stack, 50000, method = "random", as.raster = TRUE)
 
@@ -35,23 +29,22 @@ analysis_data %>%
   write_rds("analysis_data.rds")
   
 
-analysis_data <- read_rds("analysis_data.rds")
+analysis_data_1 <- read_rds("analysis_data.rds")
 
-analysis_data_ <- analysis_data %>%
+analysis_data_2 <- analysis_data_1 %>%
   group_by(ward_name) %>%
   group_split() %>%
   map_df(fill_missing_values, selected_variables = c("LULCC", "Aspect", "Slope", "builtuparea"))
 
 
+analysis_data_3 <- analysis_data_2 %>%  
+  mutate(LULCC = if_else(is.na(LULCC), 5567, LULCC))
 
-analysis_data__ <- analysis_data_ %>%  
-  mutate(LULCC = if_else(is.na(LULCC), 1.85, LULCC))
+analysis_data_4 <-  analysis_data_3 %>% 
+  distinct(.keep_all = TRUE)
 
-analysis_data__ %>% 
-  write_rds("analysis_data_set2.rds")
-
-analysis_data__ %>% 
-  st_write("data-analysis/analysis_data.shp")
+analysis_data_4 %>% 
+  st_write("data-analysis/analysis_data.shp", append=FALSE)
 
 
 

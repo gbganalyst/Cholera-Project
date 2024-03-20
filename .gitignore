@@ -5,7 +5,8 @@
 /Vector-Layers
 /Raster-Layers
 /Cholera-data-reshaped/*
-!/Cholera-data-reshaped/.gitkeep
+/Models/*
+!/Models/.gitkeep
 /data-analysis/*
 !/data-analysis/.gitkeep
 /Modified-Rasters/*
@@ -22,4 +23,5 @@ analysis_data.rds
 analysis_data_set2.rds
 the plot.R
 Untitled.ipynb
+model testing.ipynb
 Useful link.txt
